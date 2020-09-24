@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
-
+from .models import *
 
 # Create your views here.
 
@@ -10,6 +10,8 @@ from django.contrib.auth import authenticate,login,logout
 def index(request):
     if not request.user.is_authenticated:
         HttpResponseRedirect(reverse("login"))
+    x = Submission.objects.all().first()
+    print(x.lang)
     return render(request,"users/user.html")
 
 def login_view(request):
