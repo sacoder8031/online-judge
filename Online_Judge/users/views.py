@@ -28,4 +28,5 @@ def logout_view(request):
     logout(request)
     return render(request,"users/login.html")
 
-    
+def home_page(request):
+    return render(request, "users/home_page.html")
