@@ -1,14 +1,16 @@
 from django.db import models
 import datetime
 from django.contrib.auth.models import User
+from django.db.models.fields import NullBooleanField
 from django.db.models.fields.related import OneToOneField
+from jsonfield import JSONField
 
 # Create your models here.
 
 all_lang = (
-    ('c++', 'C++'),
-    ('python', 'Python'),
-    ('bash', 'Bash')
+    ('cpp', 'C++'),
+    ('py', 'Python'),
+    ('c', 'C')
 )
 
 
@@ -16,6 +18,10 @@ class userdata(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userdata")
     correct = models.IntegerField(default=0)
     incorrect = models.IntegerField(default=0)
+    tags = JSONField(default={})
+
+    def __str__(self):
+        return f'{self.user}'
 
 
 class Contest(models.Model):
@@ -35,6 +41,9 @@ class Blog(models.Model):
     contest = OneToOneField(Contest, on_delete=models.CASCADE, related_name="blog")
     timestamp = models.TimeField(auto_now=True)
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=20)
@@ -47,9 +56,11 @@ class Question(models.Model):
     statement = models.TextField()
     tags = models.ManyToManyField(Tag, blank=True, related_name="questions")
     contest = models.ForeignKey(Contest, blank=True, on_delete=models.CASCADE, related_name="questions")
+    timelimit = models.DecimalField(max_digits=6, decimal_places=3, default=1)
+    memlimit = models.IntegerField(default=128)
 
     def __str__(self):
-        return f"{self.id} {self.name}"
+        return f"{self.name}"
 
 
 class Testcase(models.Model):
@@ -57,10 +68,16 @@ class Testcase(models.Model):
     testcase = models.TextField()
     answer = models.TextField()
 
+    def __str__(self):
+        return f'{self.question.name}'
+
 
 class Submission(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="submissions")
     ques = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="submissions")
     code = models.TextField()
     lang = models.CharField(max_length=10, choices=all_lang)
-    verdict = models.CharField(max_length=10)
+    verdict = models.CharField(max_length=50, default="Queued...")
+
+    def __str__(self):
+        return f'{self.user} ----> {self.ques}'
