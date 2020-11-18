@@ -131,7 +131,7 @@ def index(request):
     recent_blog = Blog.objects.all().last()
     user = User.objects.get(username=request.user)
     mydata = user.userdata
-    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[-5:], "page_name": "home_page"}
+    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page"}
     return render(request,"users/home_page.html", context=context)
 
 
@@ -142,7 +142,7 @@ def home_page_blog(request, blog_id):
     user = User.objects.get(username=request.user)
     blog = Blog.objects.get(pk=blog_id)
     mydata = user.userdata
-    context = {"blog": blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[-5:], "page_name": "home_page"}
+    context = {"blog": blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page"}
     return render(request,"users/home_page.html", context=context)
     
 
@@ -169,7 +169,7 @@ def home_page(request):
     recent_blog = Blog.objects.all().last()
     user = User.objects.get(username=request.user)
     mydata = user.userdata
-    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[-5:], "page_name": "home_page"}
+    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page"}
     return render(request,"users/home_page.html", context=context)
 
 contests=Contest.objects.all()
