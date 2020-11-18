@@ -2,7 +2,7 @@
 {% block body %}
 
 
-<main class="container">
+<main class="container mt-5">
 <h5><b>Present Works</b></h5>
 <table class="table table-hover w-100">
     <thead class="thead-dark">
@@ -15,12 +15,16 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row">1</th>
-        <td><a href="{% url 'contest_page' %}" style="color: black;">Contest-1</a></td>
-        <td>DD MM YYYY<br>00:00:00</td>
-        <td>DD MM YYYY<br>00:00:00</td>
+        {% for contest in contests %}
+        {%if contest.start_time.date == cur_date.date%} {% endcomment %}
+        <th scope="row">{{contest.id}}</th>
+        <td><a href="{% url 'contest_page' %}" style="color: black;">{{contest.name}}</a></td>
+        <td>{{contest.start_time.date}}<br>{{contest.start_time.time}}</td>
+        <td>{{contest.end_time.date}}<br>{{contest.end_time.time}}</td>
+        {%endif%} {% endcomment %}
+        {% endfor %}
       </tr>
-      <tr>
+   <!-- <tr>
         <th scope="row">2</th>
         <td><a href="https://github.com/" style="color: black;">Contest-1</a></td>
         <td>DD MM YYYY<br>00:00:00</td>
@@ -31,7 +35,7 @@
         <td><a href="https://github.com/" style="color: black;">Contest-1</a></td>
         <td>DD MM YYYY<br>00:00:00</td>
         <td>DD MM YYYY<br>00:00:00</td>
-      </tr>
+      </tr>-->
     </tbody>
   </table>
 
@@ -46,13 +50,17 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td><a href="https://github.com/" style="color: black;">Contest-1</a></td>
-        <td>DD MM YYYY<br>00:00:00</td>
-        <td>DD MM YYYY<br>00:00:00</td>
-    </tr>
-    <tr>
+      <tr>
+        {% for contest in contests %}
+        {%if contest.start_time.date > cur_date.date%}
+        <th scope="row">{{contest.id}}</th>
+        <td><a href="{% url 'contest_page' %}" style="color: black;">{{contest.name}}</a></td>
+        <td>{{contest.start_time.date}}<br>{{contest.start_time.time}}</td>
+        <td>{{contest.end_time.date}}<br>{{contest.end_time.time}}</td>
+        {%endif%}
+        {% endfor %}
+      </tr>
+ <!--  <tr>
         <th scope="row">2</th>
         <td><a href="https://github.com/" style="color: black;">Contest-1</a></td>
         <td>DD MM YYYY<br>00:00:00</td>
@@ -63,7 +71,7 @@
         <td><a href="https://github.com/" style="color: black;">Contest-1</a></td>
         <td>DD MM YYYY<br>00:00:00</td>
         <td>DD MM YYYY<br>00:00:00</td>
-    </tr>
+    </tr>-->
     </tbody>
 </table>
 
@@ -78,13 +86,17 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-        <th scope="row">1</th>
-        <td><a href="https://github.com/" style="color: black;">Contest-1</a></td>
-        <td>DD MM YYYY<br>00:00:00</td>
-        <td>DD MM YYYY<br>00:00:00</td>
+       <tr>
+        {% for contest in contests %}
+        {%if contest.start_time.date < cur_date.date%}
+        <th scope="row">{{contest.id}}</th>
+        <td><a href="{% url 'contest_page' %}" style="color: black;">{{contest.name}}</a></td>
+        <td>{{contest.start_time.date}}<br>{{contest.start_time.time}}</td>
+        <td>{{contest.end_time.date}}<br>{{contest.end_time.time}}</td>
+        {%endif%}
+        {% endfor %}
         </tr>
-        <tr>
+     <!--   <tr>
         <th scope="row">2</th>
         <td><a href="https://github.com/" style="color: black;">Contest-1</a></td>
         <td>DD MM YYYY<br>00:00:00</td>
@@ -95,7 +107,7 @@
         <td><a href="https://github.com/" style="color: black;">Contest-1</a></td>
         <td>DD MM YYYY<br>00:00:00</td>
         <td>DD MM YYYY<br>00:00:00</td>
-        </tr>
+        </tr>-->
     </tbody>
     </table>
 </main> 

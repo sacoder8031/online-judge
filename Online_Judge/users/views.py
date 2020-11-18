@@ -147,9 +147,12 @@ def home_page(request):
         "page_name":"home_page"
     })
 
+contests=Contest.objects.all()
+cur_date=datetime.datetime.now()
+
 def lab_works(request):
     return render(request, "users/lab_works.html",{
-        "page_name":"lab_works"
+        "page_name":"lab_works","contests":contests , "cur_date":cur_date
     })
 
 def tutorial(request):
