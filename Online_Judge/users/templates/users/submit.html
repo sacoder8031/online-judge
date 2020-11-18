@@ -12,8 +12,11 @@
          <!-- <h5 class="card-title">Heading / Title</h5> -->
           <div class="card-text">
           <ul>
-          <li> dfs
-          <li> segment tree
+          {% for tag in tags %}
+          <li> {{tag}} </li>
+          {% endfor %}
+          <!-- <li> dfs
+          <li> segment tree -->
           </ul>
           </div>
         </div>
@@ -22,7 +25,7 @@
         <div class="card-header">Lab #1 - Material</div>
         <div class="card-body text-success">
           <!--<h5 class="card-title">Heading / Title</h5>-->
-          <p class="card-text">Tutorial</p>
+          <p class="card-text"><a href="{% url 'blog' blog_id %}">Tutorial</a></p>
         </div>
       </div>
     </div>
@@ -34,25 +37,25 @@
 <main role="main" class="container">
 
 <div class="w-75">
-<form>
-  
+<form action="{% url 'submit' ques_id %}" method="POST">
+  {% csrf_token %}
   <div class="form-group">
-    <label for="exampleFormControlTextarea1"><h3>Problem- Adding Squares</h3></label>
-    <form class="form-inline">
-  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Preference</label>
-  <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-    <option selected>Language</option>
-    <option value="1">C++</option>
-    <option value="2">Python</option>
-    <option value="3">Java</option>
+    <label for="exampleFormControlTextarea1"><h3>Problem- {{name}}</h3></label>
+    <!-- <form class="form-inline">
+  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Preference</label> -->
+  <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="lang">
+    <!-- <option val>Language</option> -->
+    <option value="cpp">C++</option>
+    <option value="py">Python</option>
+    <option value="c">C</option>
   </select>
-  </form>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"></textarea>
+  <!-- </form> -->
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="15" name="code"></textarea>
+  </div>
+  <div class="mx-auto" style="width: 100px;">
+    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
   </div>
 </form>
-<div class="mx-auto" style="width: 100px;">
-        <button type="button" class="btn btn-primary btn-lg">Submit</button>
-        </div>
 </div>
 </main>
 
