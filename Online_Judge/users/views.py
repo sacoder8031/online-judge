@@ -180,9 +180,13 @@ def lab_works(request):
         "page_name":"lab_works","contests":contests , "cur_date":cur_date
     })
 
+
+#For enlisting Tutorials of each Contest
+blogs=Blog.objects.all()
+
 def tutorial(request):
     return render(request, "users/tutorial.html",{
-        "page_name":"tutorial"
+        "page_name":"tutorial","blogs":blogs
     })
 
 def profile(request):
@@ -206,11 +210,18 @@ def profile(request):
         "submissions": user.submissions.all()[-5:]
     })
 
-def practice(request):
-    return render(request, "users/practice.html" , {"page_name":"practice_problems"})
 
-def problem_statement(request):
-    return render(request, "users/problem_statement.html", {"page_name":"problem_statemet"})
+
+def practice(request):
+    user = User.objects.get(username=request.user)
+    questions=Question.objects.all()
+    submissions=Submission.objects.filter(user=user)
+    return render(request, "users/practice.html" , {"page_name":"practice_problems","questions":questions , "submissions":submissions , "user":user})
+
+def problem_statement(request,question_id):
+    question = Question.objects.get(pk=question_id)
+    tags=question.tags.all()
+    return render(request, "users/problem_statement.html", {"page_name":"Problem_Statement#"+str(question_id),"question_id":question_id,"questions":question,"tags":tags})
 
 def submit(request, ques_id):
     if request.method == "POST":
@@ -227,8 +238,12 @@ def submit(request, ques_id):
     blog_id = ques.contest.blog.id
     return render(request, "users/submit.html", {"page_name":"submit problem", "ques_id": ques_id, "tags": tags, "name": ques.name, "blog_id": blog_id})
 
-def contest_page(request):
-    return render(request, "users/contest_page.html", {"page_name":"lab #1"})
+#Retreiving Problems of a contest
+
+def contest_page(request,contest_id):
+    contest=Contest.objects.get(pk=contest_id)
+    question = contest.questions.all()
+    return render(request, "users/contest_page.html", {"page_name":"lab#"+str(contest_id),"question":question,"contest_id":contest_id})
 
 def developers(request):
     return render(request, "users/developers.html", {"page_name":"Developers"})

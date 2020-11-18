@@ -36,63 +36,17 @@
     <div class="list-group">
         <div class="ml-5 pl-5">
         <div class="mr-5">
+        {% for blog in blogs%}
         <a href="#" class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1"><b>Lab Number #1 Tutorial</b></h5>
-            <small><i>3 days ago</i></small>
+            <h5 class="mb-1"><b>Lab Number #{{ blog.contest.id }} Tutorial</b></h5>
+            <small><i>{{ blog.timestamp }}</i></small>
           </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small><i>Data Structures</i></small>
+          <p class="mb-1">{{ blog.statement|truncatewords:10 }}</p>
+          <small><i>{{ blog.contest.name }}</i></small>
         </a>
-        <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1"><b>Lab Number #1 Tutorial</b></h5>
-              <small><i>3 days ago</i></small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small><i>Data Structures</i></small>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1"><b>Lab Number #1 Tutorial</b></h5>
-              <small><i>3 days ago</i></small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small><i>Data Structures</i></small>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1"><b>Lab Number #1 Tutorial</b></h5>
-              <small><i>3 days ago</i></small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small><i>Data Structures</i></small>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1"><b>Lab Number #1 Tutorial</b></h5>
-              <small><i>3 days ago</i></small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small><i>Data Structures</i></small>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1"><b>Lab Number #1 Tutorial</b></h5>
-              <small><i>3 days ago</i></small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small><i>Data Structures</i></small>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1"><b>Lab Number #1 Tutorial</b></h5>
-              <small><i>3 days ago</i></small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small><i>Data Structures</i></small>
-          </a>
       </div>
+      {% endfor %}
     </div>
     </div>
 
