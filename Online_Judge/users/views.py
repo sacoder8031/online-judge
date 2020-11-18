@@ -169,7 +169,7 @@ def home_page(request):
     recent_blog = Blog.objects.all().last()
     user = User.objects.get(username=request.user)
     mydata = user.userdata
-    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5], "page_name": "home_page"}
+    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[-5:], "page_name": "home_page"}
     return render(request,"users/home_page.html", context=context)
 
 contests=Contest.objects.all()
@@ -203,7 +203,7 @@ def profile(request):
         "tot_sub": mydata.correct + mydata.incorrect + mydata.timelimit + mydata.runtime,
         "tag_names": tag_names,
         "tag_values": tag_values,
-        "submissions": user.submissions.all()[:5]
+        "submissions": user.submissions.all()[-5:]
     })
 
 def practice(request):
