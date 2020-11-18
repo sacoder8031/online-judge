@@ -1,0 +1,148 @@
+{% extends "users/layout.html" %}
+{% block body %}
+<main role="main" class="container">
+    <div class="row ml-8 mt-5">
+      <div class="col">
+        <ul class="list-group list-group-flush">
+        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+          <li class="list-group-item"><h2>Abhishek Agarwal</h2></li>
+          <li class="list-group-item">Email - abhishek.agarwal.cse19@itbhu.ac.in</li>
+          <li class="list-group-item">Roll No. - 19075001</li>
+          <li class="list-group-item">Branch - Computer Science and Engineering (B-Tech)</li>
+          <li class="list-group-item">Course - Data Structures</li>
+        </div>
+        </ul>
+      </div>
+      
+      <div class="col col-lg-4">
+        <ul class="list-group list-group-flush">
+        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+          <li class="list-group-item"><h2 style="text-align: center;">232</h2></li>
+          <li class="list-group-item"><h6 style="text-align: center;">Problems Solved</h6></li>
+          <div class="container" >
+            <canvas id="myChart1" style="max-width: 500px;"></canvas>
+        </div>
+        
+        <script>
+            var ctx1 = document.getElementById("myChart1").getContext('2d');
+            var myChart1 = new Chart(ctx1, {
+            type: 'pie',
+            data: {
+            labels: ["WA", "RE", "AC",],
+            datasets: [{
+            label: 'Submissions',
+            data: [12, 9, 19],
+            backgroundColor: [
+            'rgb(255, 60, 0)',
+            'rgb(229, 255, 0)',
+            'rgb(21, 255, 0)'
+            ],
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
+            }]
+            },
+            options:{
+                title:{
+                   display:true,
+                   text:'Submissions',
+                   fontSize:15
+                },
+                legend:{
+                    display:true,
+                    position:'bottom',
+                },
+                layout:{
+                    padding:{
+                        left:0,
+                        right:0,
+                        bottom:0,
+                        top:0
+                    }
+                }
+            }
+            });
+        </script>
+        </div>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <main role="main" class="container">
+    <div class="row ml-8 mt-2">
+      <div class="col">
+        <ul class="list-group list-group-flush">
+        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="container">
+                <canvas id="myChart" style="max-width: 500px;"></canvas>
+            </div>
+            
+            <script>
+                var ctx = document.getElementById("myChart").getContext('2d');
+                var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                labels: ['Graphs','Data Structures','Ad-hoc','Maths','DP','Geometry'],
+                datasets: [{
+                data: [12, 9, 19,12,21,22],
+                backgroundColor: [
+                'rgb(255, 60, 0)',
+                'rgb(229, 255, 0)',
+                'rgb(21, 255, 0)',
+                'chocolate',
+                'rgb(63, 30, 210)',
+                'rgb(210, 30, 165)'
+                ],
+                borderWidth:1,
+                borderColor:'#777',
+                hoverBorderWidth:3,
+                hoverBorderColor:'#000'
+                }]
+                },
+                options:{
+                    title:{
+                       display:true,
+                       text:'Submission Analysis',
+                       fontSize:15
+                    },
+                    legend:{
+                        display:false,
+                        position:'bottom',
+                    },
+                    layout:{
+                        padding:{
+                            left:0,
+                            right:0,
+                            bottom:0,
+                            top:0
+                        }
+                    }
+                }
+                });
+            </script>
+        </div>
+        </ul>
+      </div>
+      
+      <div class="col col-lg-4">
+        <ul class="list-group list-group-flush">
+        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+          <li class="list-group-item"><h4>Recent Submissions</h4></li>
+          <li class="list-group-item">Adding squares</li>
+          <li class="list-group-item">problem 1</li>
+          <li class="list-group-item">problem 1 </li>
+          <li class="list-group-item">problem 1</li>
+          <!--{%for problem in submissions%}
+          <li class="list-group-item">{{problem.name}}</li>
+          {%empty%}
+          <li class="list-group-item">No problems solved</li>
+          {%endfor%}-->
+        </div>
+        </ul>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
