@@ -131,7 +131,7 @@ def index(request):
     recent_blog = Blog.objects.all().last()
     user = User.objects.get(username=request.user)
     mydata = user.userdata
-    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5], "page_name": "home_page"}
+    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page"}
     return render(request,"users/home_page.html", context=context)
 
 
@@ -142,7 +142,7 @@ def home_page_blog(request, blog_id):
     user = User.objects.get(username=request.user)
     blog = Blog.objects.get(pk=blog_id)
     mydata = user.userdata
-    context = {"blog": blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5], "page_name": "home_page"}
+    context = {"blog": blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page"}
     return render(request,"users/home_page.html", context=context)
     
 
@@ -169,7 +169,7 @@ def home_page(request):
     recent_blog = Blog.objects.all().last()
     user = User.objects.get(username=request.user)
     mydata = user.userdata
-    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5], "page_name": "home_page"}
+    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page"}
     return render(request,"users/home_page.html", context=context)
 
 contests=Contest.objects.all()
@@ -180,10 +180,15 @@ def lab_works(request):
         "page_name":"lab_works","contests":contests , "cur_date":cur_date
     })
 
+
+#For enlisting Tutorials of each Contest
+blogs=Blog.objects.all()
+
 def tutorial(request):
-    return render(request, "users/tutorial.html",{
-        "page_name":"tutorial"
-    })
+    user = User.objects.get(username=request.user)
+    mydata = user.userdata
+    context={"page_name":"tutorial","blogs":blogs,"notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5]}
+    return render(request, "users/tutorial.html",context=context,)
 
 def profile(request):
     user = User.objects.get(username=request.user)
@@ -203,7 +208,7 @@ def profile(request):
         "tot_sub": mydata.correct + mydata.incorrect + mydata.timelimit + mydata.runtime,
         "tag_names": tag_names,
         "tag_values": tag_values,
-        "submissions": user.submissions.all()[:5]
+        "submissions": user.submissions.all().order_by('-id')[:5]
     })
 
 
@@ -212,10 +217,14 @@ def practice(request):
     user = User.objects.get(username=request.user)
     questions=Question.objects.all()
     submissions=Submission.objects.filter(user=user)
-    return render(request, "users/practice.html" , {"page_name":"practice_problems","questions":questions , "submissions":submissions , "user":user})
+    mydata = user.userdata
+    context={"page_name":"practice_problems","questions":questions,"notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5],"submissions":submissions , "user":user}
+    return render(request, "users/practice.html" , context=context)
 
-def problem_statement(request, ques_id):
-    return render(request, "users/problem_statement.html", {"page_name":"problem_statemet" , "ques_id":ques_id})
+def problem_statement(request,question_id):
+    question = Question.objects.get(pk=question_id)
+    tags=question.tags.all()
+    return render(request, "users/problem_statement.html", {"page_name":"Problem_Statement#"+str(question_id),"question_id":question_id,"question":question,"tags":tags})
 
 def submit(request, ques_id):
     if request.method == "POST":
@@ -229,11 +238,21 @@ def submit(request, ques_id):
 
     ques = Question.objects.get(pk=ques_id)
     tags = ques.tags.all()
-    blog_id = ques.contest.blog.id
+    try:
+        blog_id = ques.contest.blog.id
+    except:
+        blog_id = 0
     return render(request, "users/submit.html", {"page_name":"submit problem", "ques_id": ques_id, "tags": tags, "name": ques.name, "blog_id": blog_id})
 
-def contest_page(request):
-    return render(request, "users/contest_page.html", {"page_name":"lab #1"})
+#Retreiving Problems of a contest
+
+def contest_page(request,contest_id):
+    contest=Contest.objects.get(pk=contest_id)
+    question = contest.questions.all()
+    user = User.objects.get(username=request.user)
+    mydata = user.userdata
+    context = {"notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5], "page_name":"lab#"+str(contest_id),"question":question,"contest_id":contest_id}
+    return render(request, "users/contest_page.html",context=context)
 
 def developers(request):
     return render(request, "users/developers.html", {"page_name":"Developers"})
