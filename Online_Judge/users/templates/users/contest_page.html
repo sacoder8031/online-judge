@@ -9,24 +9,37 @@
       <div class="card border-info mb-3" style="max-width: 18rem;">
         <div class="card-header">Notification</div>
         <div class="card-body text-info">
-          <h5 class="card-title">Heading / Title </h5>
-          <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p>
+          {% if notifications.isnull %}
+            <h5 class="card-title"> No notifications </h5>
+          {% else %}
+            {% for notification in notifications %}
+              {% if notification != "isnull" %}
+                <h5 class="card-title"> {{notification}}</h5>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          <!-- <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p> -->
         </div>
       </div>
       <div class="card border-success mb-3" style="max-width: 18rem;">
-        <div class="card-header">Lab #1 - Material</div>
+        <div class="card-header" style="font-size: larger;">Lab #{{ contest_id }}-Material</div>
         <div class="card-body text-success">
           <!--<h5 class="card-title">Heading / Title</h5>-->
           <p class="card-text">Tutorial</p>
         </div>
       </div>
-        <div class="card border-success mb-3" style="max-width: 18rem;">
-          <div class="card-header">Recent submissions</div>
-          <div class="card-body text-success">
-            <h5 class="card-title">Heading / Title</h5>
-            <p class="card-text">Problem 1</p>
-          </div>
+      <div class="card border-success mb-3" style="max-width: 18rem;">
+        <div class="card-header">Recent submissions</div>
+        <div class="card-body text-success">
+          {% if not recent_subs %}
+            <h5 class="card-title">No submissions yet...</h5>
+          {% else %}
+            {% for sub in recent_subs %}
+              <p class="card-title">{{ sub.ques }}   {{sub.verdict}}</p>
+            {% endfor %}
+          {% endif %}
         </div>
+      </div>
       </div>
     </div>
 </div>

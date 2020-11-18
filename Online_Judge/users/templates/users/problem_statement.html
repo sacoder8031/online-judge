@@ -71,7 +71,7 @@
            {{ question.statement }}
         </div>
         <div class="mx-auto" style="width: 100px;">
-        <a href="{% url 'submit' %}"><button type="button" class="btn btn-primary btn-lg">Submit</button></a>
+        <a href="{% url 'submit' question.id %}"><button type="button" class="btn btn-primary btn-lg">Submit</button></a>
         </div>
       </div>
     </div>

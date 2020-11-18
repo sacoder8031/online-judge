@@ -185,9 +185,10 @@ def lab_works(request):
 blogs=Blog.objects.all()
 
 def tutorial(request):
-    return render(request, "users/tutorial.html",{
-        "page_name":"tutorial","blogs":blogs
-    })
+    user = User.objects.get(username=request.user)
+    mydata = user.userdata
+    context={"page_name":"tutorial","blogs":blogs,"notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5]}
+    return render(request, "users/tutorial.html",context=context,)
 
 def profile(request):
     user = User.objects.get(username=request.user)
@@ -216,12 +217,14 @@ def practice(request):
     user = User.objects.get(username=request.user)
     questions=Question.objects.all()
     submissions=Submission.objects.filter(user=user)
-    return render(request, "users/practice.html" , {"page_name":"practice_problems","questions":questions , "submissions":submissions , "user":user})
+    mydata = user.userdata
+    context={"page_name":"practice_problems","questions":questions,"notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5],"submissions":submissions , "user":user}
+    return render(request, "users/practice.html" , context=context)
 
 def problem_statement(request,question_id):
     question = Question.objects.get(pk=question_id)
     tags=question.tags.all()
-    return render(request, "users/problem_statement.html", {"page_name":"Problem_Statement#"+str(question_id),"question_id":question_id,"questions":question,"tags":tags})
+    return render(request, "users/problem_statement.html", {"page_name":"Problem_Statement#"+str(question_id),"question_id":question_id,"question":question,"tags":tags})
 
 def submit(request, ques_id):
     if request.method == "POST":
@@ -246,7 +249,10 @@ def submit(request, ques_id):
 def contest_page(request,contest_id):
     contest=Contest.objects.get(pk=contest_id)
     question = contest.questions.all()
-    return render(request, "users/contest_page.html", {"page_name":"lab#"+str(contest_id),"question":question,"contest_id":contest_id})
+    user = User.objects.get(username=request.user)
+    mydata = user.userdata
+    context = {"notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5], "page_name":"lab#"+str(contest_id),"question":question,"contest_id":contest_id}
+    return render(request, "users/contest_page.html",context=context)
 
 def developers(request):
     return render(request, "users/developers.html", {"page_name":"Developers"})

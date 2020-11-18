@@ -3,45 +3,58 @@
 
 <aside class="col-md-11 blog-sidebar">
 
-<div class="mt-5">
-  <div class="mr-0">
-    <div class="float-right">
-      <div class="card border-info mb-3" style="max-width: 18rem;">
-        <div class="card-header">Notification</div>
-        <div class="card-body text-info">
-          <h5 class="card-title">Heading / Title </h5>
-          <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p>
+  <div class="mt-5">
+    <div class="mr-0">
+      <div class="float-right">
+        <div class="card border-info mb-3" style="max-width: 18rem;">
+          <div class="card-header">Notification</div>
+          <div class="card-body text-info">
+            {% if notifications.isnull %}
+              <h5 class="card-title"> No notifications </h5>
+            {% else %}
+              {% for notification in notifications %}
+                {% if notification != "isnull" %}
+                  <h5 class="card-title"> {{notification}}</h5>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+            <!-- <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p> -->
+          </div>
         </div>
-      </div>
-      <div class="card border-primary mb-3" style="max-width: 18rem;">
-        <div class="card-header">Upcoming Contests</div>
-        <div class="card-body text-primary">
-          <h5 class="card-title">Heading / Title</h5>
-          <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p>
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+          <div class="card-header">Upcoming Contests</div>
+          <div class="card-body text-primary">
+            <h5 class="card-title">Heading / Title</h5>
+            <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p>
+          </div>
         </div>
-      </div>
-      <div class="card border-success mb-3" style="max-width: 18rem;">
-        <div class="card-header">Recent submissions</div>
-        <div class="card-body text-success">
-          <h5 class="card-title">Heading / Title</h5>
-          <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p>
+        <div class="card border-success mb-3" style="max-width: 18rem;">
+          <div class="card-header">Recent submissions</div>
+          <div class="card-body text-success">
+            {% if not recent_subs %}
+              <h5 class="card-title">No submissions yet...</h5>
+            {% else %}
+              {% for sub in recent_subs %}
+                <p class="card-title">{{ sub.ques }}   {{sub.verdict}}</p>
+              {% endfor %}
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-</aside>
+  </aside>
 
 <main role="main" class="container">
 <ul class="list-group">
 <div class="mr-5">
 {%for question in questions%}
 {% if question.submissions.verdict == "Correct Answer!!"%}
-  <a href="{% url 'problem_statement' %}" class="list-group-item list-group-item-success">{{question.name}}</a>
+  <a href="{% url 'problem_statement' question.id %}" class="list-group-item list-group-item-success">{{question.name}}</a>
 {%elif question.submissions.verdict|truncatechars:5 == "Wrong"%}
-  <a href="{% url 'problem_statement' %}" class="list-group-item list-group-item-danger">{{question.name}}</a>
+  <a href="{% url 'problem_statement' question.id %}" class="list-group-item list-group-item-danger">{{question.name}}</a>
 {%else%}
- <a href="{% url 'problem_statement' %}" class="list-group-item list-group-item-secondary">{{question.name}}</a>
+ <a href="{% url 'problem_statement' question.id %}" class="list-group-item list-group-item-secondary">{{question.name}}</a>
 {%endif%}
 {%endfor%}
 </div>
