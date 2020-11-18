@@ -50,7 +50,7 @@
         <div class="ml-5 pl-5">
         <div class="mr-5">
         {% for blog in blogs%}
-        <a href="#" class="list-group-item list-group-item-action">
+        <a href="{% url 'blog' blog.id %}" class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1"><b>Lab Number #{{ blog.contest.id }} Tutorial</b></h5>
             <small><i>{{ blog.timestamp }}</i></small>

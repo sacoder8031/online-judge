@@ -121,9 +121,6 @@ def compile_run(submission_id):
 
     return
 
-        
-
-
 def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
@@ -187,7 +184,7 @@ blogs=Blog.objects.all()
 def tutorial(request):
     user = User.objects.get(username=request.user)
     mydata = user.userdata
-    context={"page_name":"tutorial","blogs":blogs,"notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5]}
+    context={"page_name":"tutorial","blogs":blogs,"notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5]}
     return render(request, "users/tutorial.html",context=context,)
 
 def profile(request):
@@ -218,7 +215,7 @@ def practice(request):
     questions=Question.objects.all()
     submissions=Submission.objects.filter(user=user)
     mydata = user.userdata
-    context={"page_name":"practice_problems","questions":questions,"notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5],"submissions":submissions , "user":user}
+    context={"page_name":"practice_problems","questions":questions,"notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5],"submissions":submissions , "user":user}
     return render(request, "users/practice.html" , context=context)
 
 def problem_statement(request,question_id):
@@ -248,7 +245,7 @@ def contest_page(request,contest_id):
     question = contest.questions.all()
     user = User.objects.get(username=request.user)
     mydata = user.userdata
-    context = {"notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5], "page_name":"lab#"+str(contest_id),"question":question,"contest_id":contest_id}
+    context = {"notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name":"lab#"+str(contest_id),"question":question,"contest_id":contest_id,"contest":contest}
     return render(request, "users/contest_page.html",context=context)
 
 def developers(request):
