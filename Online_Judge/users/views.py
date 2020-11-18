@@ -124,7 +124,24 @@ def compile_run(submission_id):
 def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
-    return render(request,"users/home_page.html")
+
+    recent_blog = Blog.objects.all().last()
+    user = User.objects.get(username=request.user)
+    mydata = user.userdata
+    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5], "page_name": "home_page"}
+    return render(request,"users/home_page.html", context=context)
+
+
+def home_page_blog(request, blog_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
+    user = User.objects.get(username=request.user)
+    blog = Blog.objects.get(pk=blog_id)
+    mydata = user.userdata
+    context = {"blog": blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5], "page_name": "home_page"}
+    return render(request,"users/home_page.html", context=context)
+    
 
 def login_view(request):
     if request.method=="POST":
@@ -143,9 +160,14 @@ def logout_view(request):
     return render(request,"users/login.html")
 
 def home_page(request):
-    return render(request, "users/home_page.html",{
-        "page_name":"home_page"
-    })
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
+    recent_blog = Blog.objects.all().last()
+    user = User.objects.get(username=request.user)
+    mydata = user.userdata
+    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all()[:5], "page_name": "home_page"}
+    return render(request,"users/home_page.html", context=context)
 
 contests=Contest.objects.all()
 cur_date=datetime.datetime.now()
@@ -161,8 +183,24 @@ def tutorial(request):
     })
 
 def profile(request):
+    user = User.objects.get(username=request.user)
+    mydata = user.userdata
+    tag_names = []
+    tag_values = []
+    if not mydata.tags["isnull"]:
+        for i in mydata.tags:
+            if i != "isnull":
+                tag_names.append(i)
+                tag_values.append(mydata.tags[i])
+
     return render(request, "users/profile.html",{
-        "page_name":"profile"
+        "page_name":"profile",
+        "user": user,
+        "data": mydata,
+        "tot_sub": mydata.correct + mydata.incorrect + mydata.timelimit + mydata.runtime,
+        "tag_names": tag_names,
+        "tag_values": tag_values,
+        "submissions": user.submissions.all()[:5]
     })
 
 def practice(request):

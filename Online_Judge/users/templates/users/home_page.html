@@ -9,8 +9,16 @@
       <div class="card border-info mb-3" style="max-width: 18rem;">
         <div class="card-header">Notification</div>
         <div class="card-body text-info">
-          <h5 class="card-title">Heading / Title </h5>
-          <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p>
+          {% if notifications.isnull %}
+            <h5 class="card-title"> No notifications </h5>
+          {% else %}
+            {% for notification in notifications %}
+              {% if notification != "isnull" %}
+                <h5 class="card-title"> {{notification}}</h5>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          <!-- <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p> -->
         </div>
       </div>
       <div class="card border-primary mb-3" style="max-width: 18rem;">
@@ -23,8 +31,13 @@
       <div class="card border-success mb-3" style="max-width: 18rem;">
         <div class="card-header">Recent submissions</div>
         <div class="card-body text-success">
-          <h5 class="card-title">Heading / Title</h5>
-          <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p>
+          {% if not recent_subs %}
+            <h5 class="card-title">No submissions yet...</h5>
+          {% else %}
+            {% for sub in recent_subs %}
+              <p class="card-title">{{ sub.ques }}   {{sub.verdict}}</p>
+            {% endfor %}
+          {% endif %}
         </div>
       </div>
     </div>
@@ -41,13 +54,13 @@
   <div class="row">
     <div class="col-md-11 blog-main">
       <h3 class="pb-4 mb-4 font-italic border-bottom">
-        From the Firehose
+        Tutorial for {{blog.contest}}
       </h3>
 
       <div class="blog-post">
-        <h2 class="blog-post-title">Sample blog post</h2>
-        <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-
+        <h2 class="blog-post-title">{{blog.name}}</h2>
+        <p class="blog-post-meta">{{blog.date}} {{blog.timestamp}} by <a href="#">{{blog.author.first_name}}</a></p>
+<!-- 
         <p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
         <hr>
         <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
@@ -74,7 +87,10 @@
           <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
           <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
         </ol>
-        <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
+        <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p> -->
+        <div style="white-space:pre-line;">
+          {{blog.statement}}
+        </div>
       </div>
     </div>
   </div>
