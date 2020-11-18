@@ -124,7 +124,7 @@ def compile_run(submission_id):
 def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
-    return render(request,"users/user.html")
+    return render(request,"users/home_page.html")
 
 def login_view(request):
     if request.method=="POST":
