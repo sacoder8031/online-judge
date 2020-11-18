@@ -114,6 +114,7 @@ def compile_run(submission_id):
     for tag in ques.tags.all():
         if tag.name not in data.tags:
             data.tags[tag.name] = 1
+            data.tags["isnull"] = False
         else:
             data.tags[tag.name] = data.tags[tag.name] + 1
     
