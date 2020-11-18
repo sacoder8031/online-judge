@@ -22,10 +22,15 @@
         </div>
       </div>
       <div class="card border-primary mb-3" style="max-width: 18rem;">
-        <div class="card-header">Upcoming Contests</div>
+        <div class="card-header">Current and Upcoming Contests</div>
         <div class="card-body text-primary">
-          <h5 class="card-title">Heading / Title</h5>
-          <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p>
+          <!-- <h5 class="card-title">Heading / Title</h5>
+          <p class="card-text">Write the contents here for example the notifications , contests , submission , etc.</p> -->
+          {% for contest in contests %}
+            {%if contest.start_time.date >= cur_date.date%} 
+              <a href="{% url 'contest_page' contest.id %}" style="color: black;">{{contest.name}}</a> <p class="text-muted"> {{contest.start_time.date}} - {{contest.end_time.date}} </p>
+            {%endif%}
+          {% endfor %}
         </div>
       </div>
       <div class="card border-success mb-3" style="max-width: 18rem;">

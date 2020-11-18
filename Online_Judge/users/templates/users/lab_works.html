@@ -15,14 +15,14 @@
     </thead>
     <tbody>
       {% for contest in contests %}
-      {%if contest.start_time.date == cur_date.date%} 
-      <tr>
-        <th scope="row">{{contest.id}}</th>
-        <td><a href="{% url 'contest_page' contest.id %}" style="color: black;">{{contest.name}}</a></td>
-        <td>{{contest.start_time.date}}<br>{{contest.start_time.time}}</td>
-        <td>{{contest.end_time.date}}<br>{{contest.end_time.time}}</td>
-      </tr>
-      {%endif%}
+        {%if contest.start_time.date == cur_date.date%} 
+            <tr>
+                <th scope="row">{{contest.id}}</th>
+                <td><a href="{% url 'contest_page' contest.id %}" style="color: black;">{{contest.name}}</a></td>
+                <td>{{contest.start_time.date}}<br>{{contest.start_time.time}}</td>
+                <td>{{contest.end_time.date}}<br>{{contest.end_time.time}}</td>
+            </tr>
+        {%endif%}
       {% endfor %}
 
     </tbody>

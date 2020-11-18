@@ -128,7 +128,9 @@ def index(request):
     recent_blog = Blog.objects.all().last()
     user = User.objects.get(username=request.user)
     mydata = user.userdata
-    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page"}
+    contests=Contest.objects.all()
+    cur_date=datetime.datetime.now()
+    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page", "contests":contests, "cur_date":cur_date}
     return render(request,"users/home_page.html", context=context)
 
 
@@ -139,7 +141,9 @@ def home_page_blog(request, blog_id):
     user = User.objects.get(username=request.user)
     blog = Blog.objects.get(pk=blog_id)
     mydata = user.userdata
-    context = {"blog": blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page"}
+    contests=Contest.objects.all()
+    cur_date=datetime.datetime.now()
+    context = {"blog": blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page", "contests":contests, "cur_date":cur_date}
     return render(request,"users/home_page.html", context=context)
     
 
@@ -166,13 +170,15 @@ def home_page(request):
     recent_blog = Blog.objects.all().last()
     user = User.objects.get(username=request.user)
     mydata = user.userdata
-    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page"}
+    contests=Contest.objects.all()
+    cur_date=datetime.datetime.now()
+    context = {"blog": recent_blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page", "contests":contests, "cur_date":cur_date}
     return render(request,"users/home_page.html", context=context)
 
-contests=Contest.objects.all()
-cur_date=datetime.datetime.now()
 
 def lab_works(request):
+    contests=Contest.objects.all()
+    cur_date=datetime.datetime.now()
     return render(request, "users/lab_works.html",{
         "page_name":"lab_works","contests":contests , "cur_date":cur_date
     })
@@ -221,7 +227,11 @@ def practice(request):
 def problem_statement(request,question_id):
     question = Question.objects.get(pk=question_id)
     tags=question.tags.all()
-    return render(request, "users/problem_statement.html", {"page_name":"Problem_Statement#"+str(question_id),"question_id":question_id,"question":question,"tags":tags})
+    try:
+        blog_id = question.contest.blog.id
+    except:
+        blog_id = 0
+    return render(request, "users/problem_statement.html", {"page_name":"Problem_Statement#"+str(question_id),"question_id":question_id,"question":question,"tags":tags, "blog_id": blog_id})
 
 def submit(request, ques_id):
     if request.method == "POST":
@@ -245,10 +255,14 @@ def submit(request, ques_id):
 
 def contest_page(request,contest_id):
     contest=Contest.objects.get(pk=contest_id)
-    question = contest.questions.all()
+    questions = contest.questions.all()
     user = User.objects.get(username=request.user)
     mydata = user.userdata
-    context = {"notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name":"lab#"+str(contest_id),"question":question,"contest_id":contest_id,"contest":contest}
+    try:
+        blog_id = contest.blog.id
+    except:
+        blog_id = 0
+    context = {"notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name":"lab#"+str(contest_id),"questions":questions,"contest_id":contest_id,"contest":contest, "blog_id" : blog_id}
     return render(request, "users/contest_page.html",context=context)
 
 def developers(request):
