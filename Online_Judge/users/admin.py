@@ -7,7 +7,7 @@ from .models import *
 class QuestionAdmin(admin.ModelAdmin):
     filter_horizontal = ("tags", )
 
-# admin.site.register(userdata)
+admin.site.register(userdata)
 admin.site.register(Contest)
 admin.site.register(Blog)
 admin.site.register(Tag)
