@@ -214,8 +214,8 @@ def practice(request):
     submissions=Submission.objects.filter(user=user)
     return render(request, "users/practice.html" , {"page_name":"practice_problems","questions":questions , "submissions":submissions , "user":user})
 
-def problem_statement(request):
-    return render(request, "users/problem_statement.html", {"page_name":"problem_statemet"})
+def problem_statement(request, ques_id):
+    return render(request, "users/problem_statement.html", {"page_name":"problem_statemet" , "ques_id":ques_id})
 
 def submit(request, ques_id):
     if request.method == "POST":

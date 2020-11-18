@@ -37,11 +37,11 @@
 <div class="mr-5">
 {%for question in questions%}
 {% if question.submissions.verdict == "Correct Answer!!"%}
-  <a href="{% url 'problem_statement' %}" class="list-group-item list-group-item-success">{{question.name}}</a>
+  <a href="{% url 'problem_statement' question.id%}" class="list-group-item list-group-item-success">{{question.name}}</a>
 {%elif question.submissions.verdict|truncatechars:5 == "Wrong"%}
-  <a href="{% url 'problem_statement' %}" class="list-group-item list-group-item-danger">{{question.name}}</a>
+  <a href="{% url 'problem_statement' question.id%}" class="list-group-item list-group-item-danger">{{question.name}}</a>
 {%else%}
- <a href="{% url 'problem_statement' %}" class="list-group-item list-group-item-secondary">{{question.name}}</a>
+ <a href="{% url 'problem_statement' question.id%}" class="list-group-item list-group-item-secondary">{{question.name}}</a>
 {%endif%}
 {%endfor%}
 </div>
