@@ -207,7 +207,7 @@ def profile(request):
         "tot_sub": mydata.correct + mydata.incorrect + mydata.timelimit + mydata.runtime,
         "tag_names": tag_names,
         "tag_values": tag_values,
-        "submissions": user.submissions.all()[-5:]
+        "submissions": user.submissions.all().order_by('-id')[:5]
     })
 
 
