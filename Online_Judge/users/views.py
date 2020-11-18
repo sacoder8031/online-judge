@@ -18,15 +18,12 @@ def compile_run(submission_id):
     def done():
         os.system(f'rm -fr /home/guest/{submission_id}')
     
-    def incorrect():
-        done()
-        submission.user.userdata.incorrect += 1
-        submission.user.userdata.save()
-    
+
     submission = Submission.objects.get(pk=submission_id)
     ques = submission.ques
     testcases = ques.testcases.all()
     lang = submission.lang
+    data = submission.user.userdata
     
     os.system(f'mkdir /home/guest/{submission_id}')
     DIR = f'/home/guest/{submission_id}'
@@ -48,7 +45,7 @@ def compile_run(submission_id):
         if compile != 0:
             submission.verdict = 'Compilation Error'
             submission.save()
-            incorrect()
+            done()
             return
 
         else:
@@ -83,13 +80,17 @@ def compile_run(submission_id):
         if err_code == 31744:
             submission.verdict = f'Time Limit Exceeded on Testcase {i + 1}'
             submission.save()
-            incorrect()
+            done()
+            data.timelimit += 1
+            data.save()
             return
 
         elif err_code != 0:
             submission.verdict = f'Runtime Error on Testcase {i + 1}'
             submission.save()
-            incorrect()
+            done()
+            data.runtime += 1
+            data.save()
             return
         
         match = os.system(f'diff -ZB {DIR}/{submission_id}.out {DIR}/{submission_id}.ans')
@@ -97,7 +98,9 @@ def compile_run(submission_id):
         if match != 0:
             submission.verdict = f'Wrong Answer on Testcase {i + 1}'
             submission.save()
-            incorrect()
+            done()
+            data.incorrect += 1
+            data.save()
             return
     
     data = submission.user.userdata
@@ -214,8 +217,20 @@ def practice(request):
 def problem_statement(request):
     return render(request, "users/problem_statement.html", {"page_name":"problem_statemet"})
 
-def submit(request):
-    return render(request, "users/submit.html", {"page_name":"submit problem"})
+def submit(request, ques_id):
+    if request.method == "POST":
+        user = User.objects.get(username=request.user.username)
+        ques = Question.objects.get(pk=ques_id)
+        code = request.POST["code"]
+        lang = request.POST["lang"]
+        submission = Submission.objects.create(user=user, ques=ques, code=code, lang=lang)
+        submission.save()
+        compile_run(submission.id)
+
+    ques = Question.objects.get(pk=ques_id)
+    tags = ques.tags.all()
+    blog_id = ques.contest.blog.id
+    return render(request, "users/submit.html", {"page_name":"submit problem", "ques_id": ques_id, "tags": tags, "name": ques.name, "blog_id": blog_id})
 
 def contest_page(request):
     return render(request, "users/contest_page.html", {"page_name":"lab #1"})

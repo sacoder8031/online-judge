@@ -9,12 +9,6 @@ from typing_extensions import runtime
 
 # Create your models here.
 
-all_lang = (
-    ('cpp', 'C++'),
-    ('py', 'Python'),
-    ('c', 'C')
-)
-
 
 class userdata(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userdata")
@@ -82,7 +76,7 @@ class Submission(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="submissions")
     ques = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="submissions")
     code = models.TextField()
-    lang = models.CharField(max_length=10, choices=all_lang)
+    lang = models.CharField(max_length=10)
     verdict = models.CharField(max_length=50, default="Queued...")
 
     def __str__(self):
