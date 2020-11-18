@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        
         <title>{{ page_name }}</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,14 +18,14 @@
 
         <link rel="stylesheet" href="{% static 'users/styles.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
-        
+
     </head>
     <body>
         <header>
             <a class="logo" href="https://iitbhu.ac.in/"><img src="{% static 'users/logo10.png' %}" alt="logo"></a>
             <nav>
                 <ul class="nav__links">
-                    <li><a href="#">Practice</a></li>
+                    <li><a href="{% url 'practice' %}">Practice</a></li>
                     <li><a href="{% url 'lab_works' %}">Lab works</a></li>
                     <li><a href="{% url 'tutorial' %}">Tutorial</a></li>
                     <li><a href="{% url 'profile' %}">Profile</a></li>
@@ -38,7 +37,7 @@
         <div id="mobile__menu" class="overlay">
             <a class="close">&times;</a>
             <div class="overlay__content">
-                  <a href="#">Practice</a>
+                  <a href="{% url 'practice' %}">Practice</a>
                   <a href="{% url 'lab_works' %}">Lab works</a>
                   <a href="{% url 'tutorial' %}">Tutorial</a>
                   <a href="{% url 'profile' %}">Profile</a>
@@ -53,11 +52,12 @@
         <footer>
             <nav>
                 <ul class="nav__links1">
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Mentors</a></li>
+                    <li><a href="{% url 'developers' %}">Developers</a></li>
+                    <li><a href="{% url 'mentors' %}">Mentors</a></li>
                 </ul>
             </nav>
         </footer>
-        
     </body>
+        
+    
 </html>
