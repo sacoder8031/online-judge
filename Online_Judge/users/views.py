@@ -203,8 +203,13 @@ def profile(request):
         "submissions": user.submissions.all()[:5]
     })
 
+
+
 def practice(request):
-    return render(request, "users/practice.html" , {"page_name":"practice_problems"})
+    user = User.objects.get(username=request.user)
+    questions=Question.objects.all()
+    submissions=Submission.objects.filter(user=user)
+    return render(request, "users/practice.html" , {"page_name":"practice_problems","questions":questions , "submissions":submissions , "user":user})
 
 def problem_statement(request):
     return render(request, "users/problem_statement.html", {"page_name":"problem_statemet"})
