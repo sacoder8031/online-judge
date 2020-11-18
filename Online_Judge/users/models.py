@@ -3,7 +3,9 @@ import datetime
 from django.contrib.auth.models import User
 from django.db.models.fields import NullBooleanField
 from django.db.models.fields.related import OneToOneField
+from django.utils.tree import Node
 from jsonfield import JSONField
+from typing_extensions import runtime
 
 # Create your models here.
 
@@ -18,7 +20,10 @@ class userdata(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userdata")
     correct = models.IntegerField(default=0)
     incorrect = models.IntegerField(default=0)
-    tags = JSONField(default={})
+    runtime = models.IntegerField(default=0)
+    timelimit = models.IntegerField(default=0)
+    tags = JSONField(default={"isnull": True})
+    notifications = JSONField(default={"isnull": True})
 
     def __str__(self):
         return f'{self.user}'
@@ -39,6 +44,7 @@ class Blog(models.Model):
     name = models.CharField(max_length=20)
     statement = models.TextField()
     contest = OneToOneField(Contest, on_delete=models.CASCADE, related_name="blog")
+    date = models.DateField(auto_now=True)
     timestamp = models.TimeField(auto_now=True)
 
     def __str__(self):
