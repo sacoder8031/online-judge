@@ -8,5 +8,11 @@ urlpatterns = [
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("home_page",views.home_page , name="home_page"),
+    path("practice",views.practice , name="practice"),
+    path("problem_statement",views.problem_statement , name="problem_statement"),
+    path("submit",views.submit , name="submit"),
+    path("contest_page",views.contest_page , name="contest_page"),
+    path("developers",views.developers , name="developers"),
+    path("mentors",views.mentors , name="mentors"),
     #path("register",views.register,name="register")
 ]

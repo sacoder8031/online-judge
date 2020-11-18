@@ -29,4 +29,22 @@ def logout_view(request):
     return render(request,"users/login.html")
 
 def home_page(request):
-    return render(request, "users/home_page.html")
+    return render(request, "users/home_page.html", {"page_name":"home_page"})
+
+def practice(request):
+    return render(request, "users/practice.html" , {"page_name":"practice_problems"})
+
+def problem_statement(request):
+    return render(request, "users/problem_statement.html", {"page_name":"problem_statemet"})
+
+def submit(request):
+    return render(request, "users/submit.html", {"page_name":"submit problem"})
+
+def contest_page(request):
+    return render(request, "users/contest_page.html", {"page_name":"lab #1"})
+
+def developers(request):
+    return render(request, "users/developers.html", {"page_name":"Developers"})
+
+def mentors(request):
+    return render(request, "users/mentors.html", {"page_name":"Mentors"})

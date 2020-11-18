@@ -1,0 +1,59 @@
+{% extends "users/layout.html" %}
+{% block body %}
+
+<aside class="col-md-11 blog-sidebar"> 
+
+<div class="mt-5">
+  <div class="mr-0">
+    <div class="float-right">
+      <div class="card border-info mb-3" style="max-width: 18rem;">
+        <div class="card-header">problem tags</div>
+        <div class="card-body text-info">
+         <!-- <h5 class="card-title">Heading / Title</h5> -->
+          <div class="card-text">
+          <ul>
+          <li> dfs
+          <li> segment tree
+          </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card border-success mb-3" style="max-width: 18rem;">
+        <div class="card-header">Lab #1 - Material</div>
+        <div class="card-body text-success">
+          <!--<h5 class="card-title">Heading / Title</h5>-->
+          <p class="card-text">Tutorial</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</aside>
+
+
+<main role="main" class="container">
+
+<div class="w-75">
+<form>
+  
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1"><h3>Problem- Adding Squares</h3></label>
+    <form class="form-inline">
+  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Preference</label>
+  <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+    <option selected>Language</option>
+    <option value="1">C++</option>
+    <option value="2">Python</option>
+    <option value="3">Java</option>
+  </select>
+  </form>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"></textarea>
+  </div>
+</form>
+<div class="mx-auto" style="width: 100px;">
+        <button type="button" class="btn btn-primary btn-lg">Submit</button>
+        </div>
+</div>
+</main>
+
+{% endblock %}
