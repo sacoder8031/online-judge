@@ -235,7 +235,10 @@ def submit(request, ques_id):
 
     ques = Question.objects.get(pk=ques_id)
     tags = ques.tags.all()
-    blog_id = ques.contest.blog.id
+    try:
+        blog_id = ques.contest.blog.id
+    except:
+        blog_id = 0
     return render(request, "users/submit.html", {"page_name":"submit problem", "ques_id": ques_id, "tags": tags, "name": ques.name, "blog_id": blog_id})
 
 #Retreiving Problems of a contest
