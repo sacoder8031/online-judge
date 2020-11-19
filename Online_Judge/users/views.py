@@ -168,7 +168,7 @@ def register(request):
             if form.is_valid():
                 email_id = form.cleaned_data.get("email")
                 send_mail("Email verification",f"Your one time password is {glob_otp}","online.judge.cse19@gmail.com",[f'{email_id}'], fail_silently=False,)
-                return render(request,"user/register.html",{"form":form})
+                return render(request,"users/register.html",{"form":form})
 
 
         if 'register' in request.POST:
