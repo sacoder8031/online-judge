@@ -186,11 +186,11 @@ def lab_works(request):
 
 
 #For enlisting Tutorials of each Contest
-blogs=Blog.objects.all()
 
 def tutorial(request):
     user = User.objects.get(username=request.user)
     mydata = user.userdata
+    blogs=Blog.objects.all()
     context={"page_name":"tutorial","blogs":blogs,"notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5]}
     return render(request, "users/tutorial.html",context=context,)
 
