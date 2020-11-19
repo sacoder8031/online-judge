@@ -1,5 +1,27 @@
 {% extends "users/layout_login.html" %}
 {% block body %}
+{% load crispy_forms_tags %}
     <div class="register">
+
+{% if message %}
+   {{message}}
+{% endif %}
+
+<br>
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+<br>
+     
+    <input type="submit" name="otp2" value="Send otp " onclick="return alert('Otp has been sent successfully on your email id..!')" />
+
+    <br>
+
+        <input type="submit" name="register" value="Register" />
+        {{form.errors}}
+    </form>
+
+    <p style="font-size: 40;"> If you already had an account <a href="{% url 'login' %}">Login</a> to your id</p>
     </div>
 {% endblock %}

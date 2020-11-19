@@ -123,3 +123,13 @@ STATIC_URL = '/static/'
 
 # for compilation
 MAX_ATTEMPTS = 1
+
+CRISPY_TEMPLATE_PACK="bootstrap4" #crispy tags
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #for mail purpose
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'online.judge.cse19@gmail.com'
+EMAIL_HOST_PASSWORD = 'technocrats1907'
+EMAIL_PORT = 587
+EMAIL_USE_SSL = False

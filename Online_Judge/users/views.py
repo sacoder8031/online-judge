@@ -6,7 +6,11 @@ from .models import *
 from background_task import background
 import os
 
-
+from django.core.mail import send_mail
+from django.contrib.auth.forms import UserCreationForm
+from .forms import RegisterForm
+import random
+import math
 # Create your views here.
 
 compile_lang = ['c', 'cpp',]
@@ -147,6 +151,53 @@ def home_page_blog(request, blog_id):
     context = {"blog": blog, "notifications": mydata.notifications, "recent_subs": user.submissions.all().order_by('-id')[:5], "page_name": "home_page", "contests":contests, "cur_date":cur_date}
     return render(request,"users/home_page.html", context=context)
     
+# Create your views here.
+def random_number():
+    random_6_digut_number = random.randint(10**5, 10**6-1)
+    return(random_6_digut_number)
+
+
+global glob_otp 
+
+def register(request):
+    form = RegisterForm()
+    if request.method=="POST": 
+        if 'otp2' in request.POST:
+            glob_otp =  random_number()
+            form = RegisterForm(request.POST)
+            if form.is_valid():
+                email_id = form.cleaned_data.get("email")
+                send_mail("Email verification",f"Your one time password is {glob_otp}","online.judge.cse19@gmail.com",[f'{email_id}'], fail_silently=False,)
+                return render(request,"user/register.html",{"form":form})
+
+
+        if 'register' in request.POST:
+            form = RegisterForm(request.POST)
+            if form.is_valid() :
+                cur = int(form.cleaned_data.get("otp"))
+                if cur==glob_otp :
+                    form.save()
+                    return render(request,"user/login.html")
+                else:
+                    return render(request,"user/register.html",{
+                    "message":"Authentication failed: invalid otp"
+                    })
+
+
+    return render(request,"user/register.html",{"form":form})
+
+#def otp(request):
+#    if request.method=="POST":
+#        otp_number = request.POST["otp"]
+#        if otp_number == glob_otp:
+#            return HttpResponseRedirect(reverse("login"))
+#        else:
+#            return render(request,"user/register.html",{
+#                "message":"Authentication failed: invalid otp"
+#            })
+#            
+#    return render(request,"user/otp.html")
+
 
 def login_view(request):
     if request.method=="POST":
