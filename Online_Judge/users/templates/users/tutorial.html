@@ -53,13 +53,13 @@
         <a href="{% url 'blog' blog.id %}" class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1"><b>Lab Number #{{ blog.contest.id }} Tutorial</b></h5>
-            <small><i>{{ blog.timestamp }}</i></small>
+            <small><i>{{ blog.date }} {{blog.timestamp}}</i></small>
           </div>
           <p class="mb-1">{{ blog.statement|truncatewords:10 }}</p>
           <small><i>{{ blog.contest.name }}</i></small>
         </a>
-      </div>
       {% endfor %}
+      </div>
     </div>
     </div>
 
