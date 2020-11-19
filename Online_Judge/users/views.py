@@ -177,14 +177,14 @@ def register(request):
                 cur = int(form.cleaned_data.get("otp"))
                 if cur==glob_otp :
                     form.save()
-                    return render(request,"user/login.html")
+                    return render(request,"users/login.html")
                 else:
-                    return render(request,"user/register.html",{
+                    return render(request,"users/register.html",{
                     "message":"Authentication failed: invalid otp"
                     })
 
 
-    return render(request,"user/register.html",{"form":form})
+    return render(request,"users/register.html",{"form":form})
 
 #def otp(request):
 #    if request.method=="POST":

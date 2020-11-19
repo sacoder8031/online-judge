@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'background_task'
+    'background_task',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
