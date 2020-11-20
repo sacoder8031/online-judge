@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'vnv4&yxmk4p2x^#hxwvv(md=g0y7@l^mi$9&k)@55#^qvfa11v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -121,7 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = '/home/ubuntu/online-judge/Online_Judge/static/'
 # for compilation
 MAX_ATTEMPTS = 1
 

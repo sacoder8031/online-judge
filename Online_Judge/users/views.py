@@ -229,6 +229,9 @@ def home_page(request):
 
 
 def lab_works(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
     contests=Contest.objects.all()
     cur_date=datetime.datetime.now()
     return render(request, "users/lab_works.html",{
@@ -239,6 +242,9 @@ def lab_works(request):
 #For enlisting Tutorials of each Contest
 
 def tutorial(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
     user = User.objects.get(username=request.user)
     mydata = user.userdata
     blogs=Blog.objects.all()
@@ -246,6 +252,9 @@ def tutorial(request):
     return render(request, "users/tutorial.html",context=context,)
 
 def profile(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
     user = User.objects.get(username=request.user)
     mydata = user.userdata
     tag_names = []
@@ -269,6 +278,9 @@ def profile(request):
 
 
 def practice(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
     user = User.objects.get(username=request.user)
     questions=Question.objects.all()
     submissions=Submission.objects.filter(user=user)
@@ -277,6 +289,9 @@ def practice(request):
     return render(request, "users/practice.html" , context=context)
 
 def problem_statement(request,question_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
     question = Question.objects.get(pk=question_id)
     tags=question.tags.all()
     try:
@@ -286,6 +301,9 @@ def problem_statement(request,question_id):
     return render(request, "users/problem_statement.html", {"page_name":"Problem_Statement#"+str(question_id),"question_id":question_id,"question":question,"tags":tags, "blog_id": blog_id})
 
 def submit(request, ques_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
     if request.method == "POST":
         user = User.objects.get(username=request.user.username)
         ques = Question.objects.get(pk=ques_id)
@@ -306,6 +324,9 @@ def submit(request, ques_id):
 #Retreiving Problems of a contest
 
 def contest_page(request,contest_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
     contest=Contest.objects.get(pk=contest_id)
     questions = contest.questions.all()
     user = User.objects.get(username=request.user)
