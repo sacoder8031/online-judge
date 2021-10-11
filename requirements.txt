@@ -1,0 +1,5 @@
+Django
+django-background-tasks
+django-crispy-forms
+jsonfield
+typing-extensions
